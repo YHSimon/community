@@ -9,3 +9,4 @@
 [OAuth application](https://github.com/settings/applications/new)
 [Authorizing app procedure](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)
 [H2 Database](http://www.h2database.com/html/quickstart.html)
+[热部署](https://www.cnblogs.com/duwamish/p/9836000.html)

@@ -29,8 +29,11 @@ public class IndexController {
                 }
             }
         }
-
         return "index";
+    }
 
+    @GetMapping("/publish")
+    public String publish(){
+        return "publish";
     }
 }
