@@ -19,21 +19,17 @@ public class IndexController {
     @GetMapping("/index")
     public String index(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie:cookies){
-            if(cookie.getName().equals("token")){
-                String token=cookie.getValue();
-                User user=userMapper.findByToken(token);
-//                System.out.println("通过查询数据库："+user);
-                if(user!=null){
-                    request.getSession().setAttribute("user", user);
+        if(cookies!=null&&cookies.length!=0) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    String token = cookie.getValue();
+                    User user = userMapper.findByToken(token);
+                    if (user != null) {
+                        request.getSession().setAttribute("user", user);
+                    }
                 }
             }
         }
         return "index";
-    }
-
-    @GetMapping("/publish")
-    public String publish(){
-        return "publish";
     }
 }
