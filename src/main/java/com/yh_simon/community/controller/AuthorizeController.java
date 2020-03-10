@@ -57,10 +57,10 @@ public class AuthorizeController {
             Cookie cookie = new Cookie("token", token);
             response.addCookie(cookie);
 //            request.getSession().setAttribute("user", user);
-            return "redirect:/index";
+            return "redirect:/";
         }
         else{
-            return "redirect:/index";
+            return "redirect:/";
         }
     }
 }

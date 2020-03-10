@@ -6,3 +6,8 @@
     float: right;
     margin-bottom: 15px;
 }
+
+.avatar{
+    width:60px;
+    height: 60px;
+}

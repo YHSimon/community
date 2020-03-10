@@ -81,7 +81,7 @@ public class QuestionController {
         question.setGmtModified(question.getGmtCreate());
         questionMapper.create(question);
 
-        return "redirect:/index";
+        return "redirect:/";
 
     }
 }
