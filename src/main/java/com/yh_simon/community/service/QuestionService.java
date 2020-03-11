@@ -22,17 +22,17 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public PaginationDTO showQuestions(Integer page, Integer limit){
-        PaginationDTO paginationDTO=new PaginationDTO();
-        int totalCount =questionMapper.count();
-        paginationDTO.setPagination(totalCount,page,limit);
-        int index=(paginationDTO.getPage()-1)*limit;
-        List<Question> questions=questionMapper.findAllQuestions(index,limit);
-        List<QuestionDTO> questionDTOS=new ArrayList<>();
-        for (Question question:questions){
-            QuestionDTO questionDTO=new QuestionDTO();
+    public PaginationDTO showQuestions(Integer page, Integer limit) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        int totalCount = questionMapper.count();
+        paginationDTO.setPagination(totalCount, page, limit);
+        int index = (paginationDTO.getPage() - 1) * limit;
+        List<Question> questions = questionMapper.findAllQuestions(index, limit);
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        for (Question question : questions) {
+            QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
-            User user=userMapper.findById(question.getCreator());
+            User user = userMapper.findById(question.getCreator());
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
@@ -40,4 +40,25 @@ public class QuestionService {
         return paginationDTO;
     }
 
+    public PaginationDTO findQuestionsByUserId(Integer id, Integer page, Integer limit) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        int totalCount = questionMapper.countByUserId(id);
+        System.out.println(totalCount);
+        if (totalCount != 0) {
+            paginationDTO.setPagination(totalCount, page, limit);
+            int index = (paginationDTO.getPage() - 1) * limit;
+            List<Question> questions = questionMapper.findAllQuestionsByUserId(id, index, limit);
+            List<QuestionDTO> questionDTOS = new ArrayList<>();
+            for (Question question : questions) {
+                QuestionDTO questionDTO = new QuestionDTO();
+                BeanUtils.copyProperties(question, questionDTO);
+                User user = userMapper.findById(question.getCreator());
+                questionDTO.setUser(user);
+                questionDTOS.add(questionDTO);
+            }
+            paginationDTO.setQuestions(questionDTOS);
+        }
+        return paginationDTO;
+
+    }
 }
