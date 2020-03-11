@@ -1,6 +1,7 @@
 package com.yh_simon.community.service;
 
 
+import com.yh_simon.community.dto.PaginationDTO;
 import com.yh_simon.community.dto.QuestionDTO;
 import com.yh_simon.community.mapper.QuestionMapper;
 import com.yh_simon.community.mapper.UserMapper;
@@ -21,8 +22,12 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public List<QuestionDTO> showQuestions(){
-        List<Question> questions=questionMapper.findAllQuestions();
+    public PaginationDTO showQuestions(Integer page, Integer limit){
+        PaginationDTO paginationDTO=new PaginationDTO();
+        int totalCount =questionMapper.count();
+        paginationDTO.setPagination(totalCount,page,limit);
+        int index=(paginationDTO.getPage()-1)*limit;
+        List<Question> questions=questionMapper.findAllQuestions(index,limit);
         List<QuestionDTO> questionDTOS=new ArrayList<>();
         for (Question question:questions){
             QuestionDTO questionDTO=new QuestionDTO();
@@ -31,7 +36,8 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
-        return questionDTOS;
+        paginationDTO.setQuestions(questionDTOS);
+        return paginationDTO;
     }
 
 }
