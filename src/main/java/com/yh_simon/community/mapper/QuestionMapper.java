@@ -3,6 +3,7 @@ package com.yh_simon.community.mapper;
 import com.yh_simon.community.model.Question;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -24,4 +25,8 @@ public interface QuestionMapper {
 
     @Select("select * from question where creator=#{id} limit #{index},#{limit}")
     List<Question> findAllQuestionsByUserId(Integer id, int index, Integer limit);
+
+
+    @Select("select * from question where id=#{id}")
+    Question getById(@Param("id") Integer id);
 }
