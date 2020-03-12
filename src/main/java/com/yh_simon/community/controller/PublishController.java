@@ -4,12 +4,12 @@ import com.yh_simon.community.mapper.QuestionMapper;
 import com.yh_simon.community.mapper.UserMapper;
 import com.yh_simon.community.model.Question;
 import com.yh_simon.community.model.User;
+import com.yh_simon.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
@@ -20,6 +20,19 @@ public class PublishController {
     @Autowired
     QuestionMapper questionMapper;
 
+    @Autowired
+    QuestionService questionService;
+
+    @GetMapping("/publish/{id}")
+    public String publish(@PathVariable("id")Integer id,Model model){
+        Question question=questionMapper.getById(id);
+        model.addAttribute("title", question.getTitle());
+        model.addAttribute("description", question.getDescription());
+        model.addAttribute("tag", question.getTag());
+        model.addAttribute("id", id);
+        return "publish";
+    }
+
     @GetMapping("/publish")
     public String publish() {
         return "publish";
@@ -29,6 +42,7 @@ public class PublishController {
     public String doPublish(@RequestParam(value = "title", required = false) String title,
                             @RequestParam(value = "description", required = false) String description,
                             @RequestParam(value = "tag", required = false) String tag,
+                            @RequestParam(value = "id",required = false) Integer id,
                             HttpServletRequest request, Model model) {
 
 
@@ -62,7 +76,8 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
-        questionMapper.create(question);
+        question.setId(id);
+        questionService.createOrUpdate(question);
 
         return "redirect:/";
 
