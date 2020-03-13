@@ -3,6 +3,8 @@ package com.yh_simon.community.service;
 
 import com.yh_simon.community.dto.PaginationDTO;
 import com.yh_simon.community.dto.QuestionDTO;
+import com.yh_simon.community.exception.CustomizeErrorCode;
+import com.yh_simon.community.exception.CustomizeException;
 import com.yh_simon.community.mapper.QuestionMapper;
 import com.yh_simon.community.mapper.UserMapper;
 import com.yh_simon.community.model.Question;
@@ -65,6 +67,9 @@ public class QuestionService {
     public QuestionDTO getById(Integer id) {
         QuestionDTO questionDTO=new QuestionDTO();
         Question question=questionMapper.getById(id);
+        if(question==null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
+        }
         BeanUtils.copyProperties(question, questionDTO);
         User user = userMapper.findById(question.getCreator());
         questionDTO.setUser(user);
@@ -76,7 +81,11 @@ public class QuestionService {
             questionMapper.create(question);
         }else{
             question.setGmtModified(System.currentTimeMillis());
-            questionMapper.update(question);
+            int updated = questionMapper.update(question);
+            if(updated!=1)
+            {
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
+            }
         }
     }
 }

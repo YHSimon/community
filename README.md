@@ -1,6 +1,7 @@
 ## 码猿社区
 
 ## 资料
+[Spring](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-embedded-database-support)  
 [Spring 文档](https://spring.io/guides/)  
 [Spring Web](https://spring.io/guides/gs/serving-web-content/)  
 [bootstrap](https://v3.bootcss.com/)  
