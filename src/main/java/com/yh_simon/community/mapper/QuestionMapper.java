@@ -18,14 +18,14 @@ public interface QuestionMapper {
     int count();
 
     @Select("select count(1) from question where creator=#{id}")
-    int countByUserId(Integer id);
+    int countByUserId(Long id);
 
     @Select("select * from question where creator=#{id} limit #{index},#{limit}")
-    List<Question> findAllQuestionsByUserId(Integer id, int index, Integer limit);
+    List<Question> findAllQuestionsByUserId(Long id, int index, Integer limit);
 
 
     @Select("select * from question where id=#{id}")
-    Question getById(@Param("id") Integer id);
+    Question getById(@Param("id") Long id);
 
 
     @Update("update question set title=#{title} ,description=#{description},tag=#{tag} where id=#{id}")
@@ -33,5 +33,8 @@ public interface QuestionMapper {
 
 
     @Update("update question set view_count=view_count+1 where id=#{id}")
-    void incView(@Param("id")Integer id);
+    void incView(@Param("id")Long id);
+
+    @Update("update question set comment_count=comment_count+1 where id=#{id}")
+    void incCommentCount(Question question);
 }

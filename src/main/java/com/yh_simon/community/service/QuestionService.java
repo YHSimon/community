@@ -42,7 +42,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO findQuestionsByUserId(Integer id, Integer page, Integer limit) {
+    public PaginationDTO findQuestionsByUserId(Long id, Integer page, Integer limit) {
         PaginationDTO paginationDTO = new PaginationDTO();
         int totalCount = questionMapper.countByUserId(id);
 //        System.out.println(totalCount);
@@ -64,7 +64,7 @@ public class QuestionService {
 
     }
 
-    public QuestionDTO getById(Integer id) {
+    public QuestionDTO getById(Long id) {
         QuestionDTO questionDTO=new QuestionDTO();
         Question question=questionMapper.getById(id);
         if(question==null){
@@ -89,7 +89,7 @@ public class QuestionService {
         }
     }
 
-    public void incView(Integer id) {
+    public void incView(Long id) {
          questionMapper.incView(id);
     }
 }

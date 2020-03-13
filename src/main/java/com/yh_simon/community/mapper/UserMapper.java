@@ -15,7 +15,7 @@ public interface UserMapper {
 
 
     @Select("select * from user where id=#{id}")
-    User findById(@Param("id") Integer creator);
+    User findById(@Param("id") Long creator);
 
     @Select("select * from user where account_id=#{accountId}")
     User findByAccountId(@Param("accountId") String accountId);
