@@ -33,6 +33,7 @@ public class ProfileController {
         }
         if("questions".equals(action)){
             PaginationDTO paginationDTO=questionService.findQuestionsByUserId(user.getId(),page,limit);
+            System.out.println(paginationDTO);
             model.addAttribute("section", "questions");
             model.addAttribute("sectionName", "我的问题");
             model.addAttribute("pagination", paginationDTO);

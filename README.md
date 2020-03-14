@@ -15,3 +15,7 @@
 [Spring Framework docs](https://docs.spring.io/spring/docs/5.2.4.RELEASE/spring-framework-reference/index.html)
 ## 工具
 [OctoTree](https://www.octotree.io/)
+
+```bash
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
+```

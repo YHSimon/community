@@ -25,7 +25,7 @@ public class PublishController {
 
     @GetMapping("/publish/{id}")
     public String publish(@PathVariable("id")Long id,Model model){
-        Question question=questionMapper.getById(id);
+        Question question=questionMapper.selectByPrimaryKey(id);
         model.addAttribute("title", question.getTitle());
         model.addAttribute("description", question.getDescription());
         model.addAttribute("tag", question.getTag());

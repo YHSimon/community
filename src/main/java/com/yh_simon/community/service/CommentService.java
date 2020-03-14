@@ -31,7 +31,7 @@ public class CommentService {
 
         }else{
             //回复问题
-            Question question=questionMapper.getById(comment.getParentId());
+            Question question=questionMapper.selectByPrimaryKey(comment.getParentId());
             if(question==null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }

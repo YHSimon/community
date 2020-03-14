@@ -34,7 +34,7 @@ public class QuestionService {
         for (Question question : questions) {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
-            User user = userMapper.findById(question.getCreator());
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
@@ -54,7 +54,7 @@ public class QuestionService {
             for (Question question : questions) {
                 QuestionDTO questionDTO = new QuestionDTO();
                 BeanUtils.copyProperties(question, questionDTO);
-                User user = userMapper.findById(question.getCreator());
+                User user = userMapper.selectByPrimaryKey(question.getCreator());
                 questionDTO.setUser(user);
                 questionDTOS.add(questionDTO);
             }
@@ -66,22 +66,22 @@ public class QuestionService {
 
     public QuestionDTO getById(Long id) {
         QuestionDTO questionDTO=new QuestionDTO();
-        Question question=questionMapper.getById(id);
+        Question question=questionMapper.selectByPrimaryKey(id);
         if(question==null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
         }
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userMapper.findById(question.getCreator());
+        User user = userMapper.selectByPrimaryKey(question.getCreator());
         questionDTO.setUser(user);
         return questionDTO;
     }
 
     public void createOrUpdate(Question question) {
         if(question.getId()==null){
-            questionMapper.create(question);
+            questionMapper.insertSelective(question);
         }else{
             question.setGmtModified(System.currentTimeMillis());
-            int updated = questionMapper.update(question);
+            int updated = questionMapper.updateByPrimaryKeySelective(question);
             if(updated!=1)
             {
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
