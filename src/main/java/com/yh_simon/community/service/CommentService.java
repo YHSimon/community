@@ -7,9 +7,9 @@ import com.yh_simon.community.mapper.CommentMapper;
 import com.yh_simon.community.mapper.QuestionMapper;
 import com.yh_simon.community.model.Comment;
 import com.yh_simon.community.model.Question;
-import com.yh_simon.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommentService {
@@ -19,7 +19,9 @@ public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
-    public void insert(Comment comment, User commentator) {
+
+    @Transactional
+    public void insert(Comment comment) {
         if(comment.getParentId()==null||comment.getParentId()==0){
             throw new CustomizeException(CustomizeErrorCode.TARGET_PARAM_NOT_FOUND);
         }
@@ -35,8 +37,7 @@ public class CommentService {
             if(question==null){
                 throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
             }
-            comment.setCommentCount(0);
-            commentMapper.insert(comment);
+            commentMapper.insertSelective(comment);
             questionMapper.incCommentCount(question);
         }
     }
