@@ -9,6 +9,15 @@
     <script src="js/jquery-3.4.1.min.js"></script>
     <script src="js/bootstrap.min.js" type="application/javascript"></script>
 </head>
+<script type="application/javascript">
+    window.onload = function () {
+        var closable = window.localStorage.getItem("closable");
+        if (closable=="true") {
+            window.close();
+            window.localStorage.removeItem("closable");
+        }
+    }
+</script>
 <body>
 <div th:insert="~{navigation :: nav}"></div>
 <div class="container-fluid main">
@@ -19,7 +28,7 @@
             <div class="media" th:each="question : ${pagination.questions}">
                 <div class="media-left">
                     <a href="#">
-<!--                        th:src="${question.user.avatarUrl}"-->
+                        <!--                        th:src="${question.user.avatarUrl}"-->
                         <img class="media-object img-rounded avatar" th:src="${question.user.avatarUrl}">
                     </a>
                 </div>

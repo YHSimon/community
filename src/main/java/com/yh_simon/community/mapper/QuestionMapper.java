@@ -15,7 +15,7 @@ public interface QuestionMapper {
     @Select("select count(1) from question where creator=#{id}")
     Integer countByUserId(Long id);
 
-    @Select("select * from question limit #{index},#{limit}")
+    @Select("select * from question order by gmt_create desc limit #{index},#{limit}")
     List<Question>  findAllQuestions(int index,int limit);
 
     @Select("select * from question where creator=#{id} limit #{index},#{limit}")
