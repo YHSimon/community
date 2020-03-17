@@ -40,24 +40,36 @@ public class CommentService {
         }
         if(comment.getType()==CommentTypeEnum.COMMENT.getType()){
             //回复评论
+            Comment dbComment=commentMapper.selectByPrimaryKey(comment.getParentId());
+            if(dbComment==null){
+                throw  new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+            }
+
+            //回复评论的回复问题 （二级评论的上上级）
+            Question question=questionMapper.selectByPrimaryKey((dbComment.getParentId()));
+            if(question==null){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
+            }
+            commentMapper.insert(comment);
+            commentMapper.incComentCount(comment.getParentId());
 
         }else{
             //回复问题
             Question question=questionMapper.selectByPrimaryKey(comment.getParentId());
             if(question==null){
-                throw new CustomizeException(CustomizeErrorCode.COMMENT_NOT_FOUND);
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
             }
             commentMapper.insertSelective(comment);
             questionMapper.incCommentCount(question);
         }
     }
 
-    public List<CommentDTO> listByQustionId(Long id) {
+    public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum typeEnum) {
         CommentExample commentExample = new CommentExample();
         commentExample.setOrderByClause("gmt_create desc");
         commentExample.createCriteria().
                 andParentIdEqualTo(id).
-                andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+                andTypeEqualTo(typeEnum.getType());
         List<Comment> comments = commentMapper.selectByExample(commentExample);
         if(comments.size()==0){
             return null;
