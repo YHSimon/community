@@ -50,8 +50,8 @@ public class CommentService {
             if(question==null){
                 throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
             }
-            commentMapper.insert(comment);
-            commentMapper.incComentCount(comment.getParentId());
+            commentMapper.insertSelective(comment);
+            commentMapper.incCommentCount(comment.getParentId());
 
         }else{
             //回复问题

@@ -21,6 +21,8 @@ public interface QuestionMapper {
     @Select("select * from question where creator=#{id} limit #{index},#{limit}")
     List<Question> findAllQuestionsByUserId(Long id,int index,int limit);
 
+    @Select("select * from question where tag regexp #{regexp} and id!=#{id}")
+    List<Question> findRelatedQuestionsByTag(String regexp,Long id);
 
     @Update("update question set view_count=view_count+1 where id=#{id}")
     void incView(Long id);

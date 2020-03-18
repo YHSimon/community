@@ -76,6 +76,10 @@ public class QuestionService {
         return questionDTO;
     }
 
+    public List<Question>  findRelatedQuestionsByTag(String regexp,Long id){
+        return questionMapper.findRelatedQuestionsByTag(regexp, id);
+    }
+
     public void createOrUpdate(Question question) {
         if(question.getId()==null){
             questionMapper.insertSelective(question);
