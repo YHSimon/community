@@ -4,13 +4,13 @@
 function post() {
     var questionId = $("#question_id").val();
     var content = $("#comment_content").val().trim();
-    comment2target(questionId,1,content);
+    comment2target(questionId, 1, content);
     // console.log(questionId);
     // console.log(content);
 }
 
-function comment2target(targetId,type,content) {
-    if(!content){
+function comment2target(targetId, type, content) {
+    if (!content) {
         alert("不能回复空内容！！！");
         return;
     }
@@ -34,7 +34,7 @@ function comment2target(targetId,type,content) {
                         window.open("https://github.com/login/oauth/authorize?client_id=4300cf1bae128fc6eb78&redirect_uri=http://localhost:8888/callback&scope=user&state=1");
                         window.localStorage.setItem("closable", "true"); //登录后的新页面根据传参判断是否自动关闭新页面
                     }
-                }else {
+                } else {
                     alert(response.message);
                 }
             }
@@ -43,10 +43,11 @@ function comment2target(targetId,type,content) {
         contentType: "application/json"
     });
 }
+
 function comment(e) {
-    var commentId=e.getAttribute("data-id");
-    var content=$("#input-"+commentId).val().trim();
-    comment2target(commentId,2,content);
+    var commentId = e.getAttribute("data-id");
+    var content = $("#input-" + commentId).val().trim();
+    comment2target(commentId, 2, content);
     console.log(commentId);
     console.log(content);
 }
@@ -56,16 +57,16 @@ function comment(e) {
  */
 
 function collapseComments(e) {
-    var id=e.getAttribute("data-id");
-    var comments=$("#comment-"+id);
+    var id = e.getAttribute("data-id");
+    var comments = $("#comment-" + id);
 
-    var collapse=e.getAttribute("data-collapse");
-    if(collapse){
+    var collapse = e.getAttribute("data-collapse");
+    if (collapse) {
         //折叠二级评论
         comments.removeClass("in");
         e.removeAttribute("data-collapse");
         e.classList.remove("active");
-    }else{
+    } else {
         var subCommentContainer = $("#comment-" + id);
         if (subCommentContainer.children().length != 1) {
             //展开二级评论
@@ -73,7 +74,7 @@ function collapseComments(e) {
             // 标记二级评论展开状态
             e.setAttribute("data-collapse", "in");
             e.classList.add("active");
-        }else {
+        } else {
             //展开二级评论
             $.getJSON("/comment/" + id, function (data) {
                 $.each(data.data.reverse(), function (index, comment) {
@@ -114,4 +115,21 @@ function collapseComments(e) {
             e.classList.add("active");
         }
     }
+}
+
+function showSelectTag() {
+    $("#select-tag").show();
+}
+
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
+    var previous = $("#tag").val();
+    if (previous.indexOf(value) == -1) {
+        if (previous) {
+            $("#tag").val(previous + "," + value);
+        } else {
+            $("#tag").val(value);
+        }
+    }
+
 }
