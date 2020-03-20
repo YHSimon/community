@@ -38,7 +38,7 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOS.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOS);
+        paginationDTO.setData(questionDTOS);
         return paginationDTO;
     }
 
@@ -58,7 +58,7 @@ public class QuestionService {
                 questionDTO.setUser(user);
                 questionDTOS.add(questionDTO);
             }
-            paginationDTO.setQuestions(questionDTOS);
+            paginationDTO.setData(questionDTOS);
         }
         return paginationDTO;
 
@@ -82,7 +82,11 @@ public class QuestionService {
 
     public void createOrUpdate(Question question) {
         if(question.getId()==null){
-            questionMapper.insertSelective(question);
+            int i = questionMapper.insertSelective(question);
+            if(i!=1)
+            {
+                throw new CustomizeException(CustomizeErrorCode.INVALID_INPUT);
+            }
         }else{
             question.setGmtModified(System.currentTimeMillis());
             int updated = questionMapper.updateByPrimaryKeySelective(question);

@@ -5,6 +5,7 @@ import com.yh_simon.community.dto.CommentDTO;
 import com.yh_simon.community.dto.ResultDTO;
 import com.yh_simon.community.enums.CommentTypeEnum;
 import com.yh_simon.community.exception.CustomizeErrorCode;
+import com.yh_simon.community.mapper.NotificationMapper;
 import com.yh_simon.community.model.Comment;
 import com.yh_simon.community.model.User;
 import com.yh_simon.community.service.CommentService;
@@ -21,6 +22,7 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+
 
     @PostMapping("/comment")
     @ResponseBody
@@ -39,7 +41,7 @@ public class CommentController {
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(comment.getGmtCreate());
         comment.setCommentator(user.getId());
-        commentService.insert(comment);
+        commentService.insert(comment,user);
         return ResultDTO.okOf();
     }
 
