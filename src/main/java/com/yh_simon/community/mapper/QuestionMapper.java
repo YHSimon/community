@@ -18,11 +18,17 @@ public interface QuestionMapper {
     @Select("select * from question order by gmt_create desc limit #{index},#{limit}")
     List<Question>  findAllQuestions(int index,int limit);
 
+    @Select("select * from question where title regexp #{searchText} order by gmt_create desc limit #{index},#{limit}")
+    List<Question> search(String searchText, int index, Integer limit);
+
     @Select("select * from question where creator=#{id} limit #{index},#{limit}")
-    List<Question> findAllQuestionsByUserId(Long id,int index,int limit);
+    List<Question> findQuestionsByUserId(Long id, int index, int limit);
 
     @Select("select * from question where tag regexp #{regexp} and id!=#{id}")
     List<Question> findRelatedQuestionsByTag(String regexp,Long id);
+
+    @Select("select count(1) from question where title regexp #{searchText}")
+    int countBySearchText(String searchText);
 
     @Update("update question set view_count=view_count+1 where id=#{id}")
     void incView(Long id);

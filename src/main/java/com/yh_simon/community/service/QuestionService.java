@@ -49,7 +49,7 @@ public class QuestionService {
         if (totalCount != 0) {
             paginationDTO.setPagination(totalCount, page, limit);
             int index = (paginationDTO.getPage() - 1) * limit;
-            List<Question> questions = questionMapper.findAllQuestionsByUserId(id, index, limit);
+            List<Question> questions = questionMapper.findQuestionsByUserId(id, index, limit);
             List<QuestionDTO> questionDTOS = new ArrayList<>();
             for (Question question : questions) {
                 QuestionDTO questionDTO = new QuestionDTO();
@@ -99,5 +99,26 @@ public class QuestionService {
 
     public void incView(Long id) {
          questionMapper.incView(id);
+    }
+
+    public PaginationDTO search(String searchText, Integer page, Integer limit) {
+        PaginationDTO paginationDTO = new PaginationDTO();
+        int totalCount = questionMapper.countBySearchText(searchText);
+        if(totalCount==0){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUNT);
+        }
+        paginationDTO.setPagination(totalCount, page, limit);
+        int index = (paginationDTO.getPage() - 1) * limit;
+        List<Question> questions = questionMapper.search(searchText,index, limit);
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        for (Question question : questions) {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);
+            User user = userMapper.selectByPrimaryKey(question.getCreator());
+            questionDTO.setUser(user);
+            questionDTOS.add(questionDTO);
+        }
+        paginationDTO.setData(questionDTOS);
+        return paginationDTO;
     }
 }

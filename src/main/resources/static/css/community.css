@@ -1,13 +1,3 @@
-.main {
-    margin: 30px;
-    background: white;
-}
-
-.btn-publish {
-    float: right;
-    margin-bottom: 15px;
-}
-
 .avatar {
     width: 60px;
     height: 60px;
@@ -18,29 +8,9 @@
     height: 40px;
 }
 
-.menu {
-    margin: 0;
-}
-
-.menu .icon {
-    color: #999;
-    margin-top: 10px;
-}
-
-.menu .active {
-    color: #499ef3;
-}
-
-.menu .icon:hover {
-    color: #499ef3;
-}
-
-.sub-comments {
-    margin-top: 15px;
-    margin-bottom: 10px;
-    border: 1px solid #eee;
-    border-radius: 25px;
-    padding: 30px;
+.btn-publish {
+    float: right;
+    margin-bottom: 15px;
 }
 
 .comments {
@@ -63,15 +33,51 @@
     margin: 4px;
 }
 
-.publish-tag-tab {
-    display: none;
-    margin-top: 10px;
-    padding-top: 10px;
-}
-.description-summary{
+.description-summary {
     display: block;
     width: 500px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+.main {
+    margin: 30px;
+    background: white;
+}
+
+.menu {
+    margin: 0;
+}
+
+.menu .icon {
+    color: #999;
+    margin-top: 10px;
+}
+
+.menu .active {
+    color: #499ef3;
+}
+
+.menu .icon:hover {
+    color: #499ef3;
+}
+
+
+.publish-tag-tab {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.replier {
+    margin-top: 12px;
+}
+
+.sub-comments {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    border-radius: 25px;
+    padding: 30px;
 }

@@ -7,6 +7,7 @@ import com.yh_simon.community.model.User;
 import com.yh_simon.community.model.UserExample;
 import com.yh_simon.community.service.NotificationService;
 import com.yh_simon.community.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,7 +53,17 @@ public class IndexController {
             }
         }
         model.addAttribute("pagination", paginationDTO);
+        return "index";
+    }
 
+    @GetMapping("/search")
+    public String search(Model model,@RequestParam("searchText") String searchText,@RequestParam(value = "page", defaultValue = "1") Integer page, @RequestParam(value = "limit", defaultValue = "3") Integer limit){
+        if(StringUtils.isBlank(searchText)){
+            return "redirect:/";
+        }
+        PaginationDTO paginationDTO = questionService.search(searchText,page, limit);
+        System.out.println(paginationDTO);
+        model.addAttribute("pagination",paginationDTO);
         return "index";
     }
 }
