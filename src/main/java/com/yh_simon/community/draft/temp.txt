@@ -1,0 +1,2 @@
+ @Select("select * from notification where receiver=#{id} order by gmt_create desc limit #{index},#{limit}")
+    List<Notification> findNotifications(Long id,int index,int limit);

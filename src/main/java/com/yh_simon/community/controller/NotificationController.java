@@ -3,7 +3,6 @@ package com.yh_simon.community.controller;
 
 import com.yh_simon.community.dto.NotificationDTO;
 import com.yh_simon.community.enums.NotificationTypeEnum;
-import com.yh_simon.community.model.Notification;
 import com.yh_simon.community.model.User;
 import com.yh_simon.community.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class NotificationController {
         }
         NotificationDTO notificationDTO=notificationService.read(id, user);
         if(NotificationTypeEnum.REPLY_COMMENT.getType()==notificationDTO.getType()||NotificationTypeEnum.REPLY_QUESTION.getType()==notificationDTO.getType()){
-            return "redirect:/question/"+notificationDTO.getOuterid();
+            return "redirect:/question/"+notificationDTO.getOuterId();
         }else {
             return "redirect:/";
         }
