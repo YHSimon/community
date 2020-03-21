@@ -68,3 +68,10 @@
     margin-top: 10px;
     padding-top: 10px;
 }
+.description-summary{
+    display: block;
+    width: 500px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
