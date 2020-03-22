@@ -2,10 +2,10 @@ package com.yh_simon.community.controller;
 
 import com.yh_simon.community.dto.AccesstokenDTO;
 import com.yh_simon.community.dto.GithubUser;
-import com.yh_simon.community.mapper.UserMapper;
 import com.yh_simon.community.model.User;
 import com.yh_simon.community.provider.GithubProvider;
 import com.yh_simon.community.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 public class AuthorizeController {
 
     @Autowired
@@ -58,6 +59,7 @@ public class AuthorizeController {
             return "redirect:/";
         }
         else{
+            log.error("callback githubUser error,{}",githubUser);
             return "redirect:/";
         }
     }
