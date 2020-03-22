@@ -41,6 +41,12 @@
     text-overflow: ellipsis;
 }
 
+
+.footer{
+    padding:15px;
+    text-align: center;
+    width: 100%;
+}
 .main {
     margin: 30px;
     background: white;
